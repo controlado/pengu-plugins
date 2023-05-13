@@ -1,0 +1,3 @@
+[submodule "plugin-champion-select"]
+	path = plugin-champion-select
+	url = https://github.com/controlado/plugin-champion-select
