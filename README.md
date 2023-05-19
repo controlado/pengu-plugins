@@ -9,5 +9,9 @@ Here are all my Pengu plugins! :)
 
 ## Releases
 
-- [buy-champion](https://github.com/controlado/buy-champions) (buy champions automatically)
-- [auto-champion-select](https://github.com/controlado/auto-champion-select) (pick or ban automatically)
+[buy-champion](https://github.com/controlado/buy-champions) (buy champions automatically) <br>
+[auto-champion-select](https://github.com/controlado/auto-champion-select) (pick or ban automatically)
+
+## Installation
+
+    git clone --recurse-submodules https://github.com/controlado/pengu-plugins.git
