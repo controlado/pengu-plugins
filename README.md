@@ -10,7 +10,9 @@ Here are all my Pengu plugins! :)
 ## Releases
 
 [buy-champion](https://github.com/controlado/buy-champions) (buy champions automatically) <br>
-[auto-champion-select](https://github.com/controlado/auto-champion-select) (pick or ban automatically)
+[auto-champion-select](https://github.com/controlado/auto-champion-select) (pick or ban automatically) <br>
+[refund-last-purchase](https://github.com/controlado/refund-last-purchase) (play with a champion for free) <br>
+[profile-utils](https://github.com/controlado/profile-utils) (utilities for your profile)
 
 ## Installation
 
