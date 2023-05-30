@@ -7,3 +7,6 @@
 [submodule "refund-last-purchase"]
 	path = refund-last-purchase
 	url = https://github.com/controlado/refund-last-purchase
+[submodule "profile-utils"]
+	path = profile-utils
+	url = https://github.com/controlado/profile-utils
