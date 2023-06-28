@@ -1,3 +1,5 @@
+import axios from "https://cdn.skypack.dev/axios"
+
 /**
  * @author
  * Nome: Yan Gabriel    
@@ -58,6 +60,70 @@ async function watchRoutines() {
             routine();
         }
         await sleep(1000);
+    }
+}
+
+/**
+* Possibilita requisições a loja do usuário autenticado.
+*/
+export class StoreBase {
+    constructor() {
+        this.url = null;
+        this.token = null;
+        this.summoner = null;
+        this.session = axios.create();
+        this.auth();
+    }
+
+    /**
+     * Faz uma requisição para a loja.
+     *
+     * @async
+     * @function
+     * @summary Deve ser chamada após a conclusão do {@link auth}.
+     * @param {String} method - Método HTTP da requisição, como `GET`.
+     * @param {String} endpoint - Endpoint da requisição para a loja.
+     * @param {JSON} [requestBody] - Parâmetro opcional, corpo da requisição.
+     * @return {Promise<Response>} Resposta da requisição.
+     */
+    async request(method, endpoint, requestBody = undefined) {
+        const requestParams = {
+            method: method,
+            headers: {
+                Authorization: `Bearer ${this.token}`,
+            },
+        };
+        if (requestBody) requestParams.data = requestBody;
+        return await this.session.request(this.url + endpoint, requestParams);
+    }
+
+    /**
+     * Autentica a classe, definindo os atributos da instância.
+     * 
+     * @async
+     * @function
+     * @summary Essa função deve ser chamada antes de utilizar a classe.
+     */
+    async auth() {
+        this.url = await this.getStoreUrl();
+        this.token = await this.getSummonerToken();
+        this.summoner = await this.getSummonerData();
+    }
+
+    async getStoreUrl() {
+        const response = await fetch("/lol-store/v1/getStoreUrl");
+        return await response.json();
+    }
+
+    async getSummonerToken() {
+        const response = await fetch("/lol-rso-auth/v1/authorization/access-token");
+        const responseData = await response.json();
+        return responseData.token;
+    }
+
+    async getSummonerData() {
+        const response = await fetch("/lol-summoner/v1/current-summoner");
+        return await response.json();
     }
 }
 
