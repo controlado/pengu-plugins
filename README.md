@@ -1,18 +1,22 @@
 <div align="center">
 
-# `🐧` Pengu Plugins <br> [![Discord](https://dcbadge.vercel.app/api/shield/854886148455399436?style=flat&compact=true)](https://discordapp.com/users/854886148455399436) [![Pengu Loader Discord](https://dcbadge.vercel.app/api/server/9Ubaf7xCRe?style=flat)](https://discord.gg/9Ubaf7xCRe)
+# `🐧` Pengu Plugins <br>
 
-Here are all my Pengu plugins! :)
+[![discord](https://dcbadge.vercel.app/api/shield/854886148455399436?style=flat)](https://discordapp.com/users/854886148455399436) <br>
+[![pengu](https://dcbadge.vercel.app/api/server/9Ubaf7xCRe?style=flat)](https://discord.gg/9Ubaf7xCRe)
+
+Here are all my Pengu plugins! :) <br>
+Be sure to read their documentation
 
 </div>
 <br>
 
 ## Releases
 
-[buy-champion](https://github.com/controlado/buy-champions) (buy champions automatically) <br>
 [auto-champion-select](https://github.com/controlado/auto-champion-select) (pick or ban automatically) <br>
-[refund-last-purchase](https://github.com/controlado/refund-last-purchase) (play with a champion for free) <br>
-[profile-utils](https://github.com/controlado/profile-utils) (utilities for your profile)
+[buy-champions](https://github.com/controlado/buy-champions) (buy champions automatically) <br>
+[profile-utils](https://github.com/controlado/profile-utils) (utilities for your profile) <br>
+[refund-last-purchase](https://github.com/controlado/refund-last-purchase) (play with a champion for free)
 
 ## Installation
 
