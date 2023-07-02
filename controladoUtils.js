@@ -23,7 +23,7 @@ export const routines = [];
  * 
  * @var
  * @default
- * @see {@link linkEndpoint} (/lol-gameflow/v1/gameflow-phase/)
+ * @see {@link linkEndpoint} (/lol-gameflow/v1/gameflow-phase)
  */
 export let gamePhase = null;
 
