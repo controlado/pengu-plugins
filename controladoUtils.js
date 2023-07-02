@@ -1,9 +1,9 @@
-import axios from "https://cdn.skypack.dev/axios"
+import axios from "https://cdn.skypack.dev/axios";
 
 /**
  * @author
- * Nome: Yan Gabriel    
- * Discord: Balaclava#1912 (854886148455399436)    
+ * Nome: Yan Gabriel
+ * Discord: Balaclava#1912 (854886148455399436)
  * GitHub: https://github.com/controlado
  */
 
@@ -11,16 +11,16 @@ const clientAuthRegex = /^--riotclient-auth-token=(.+)$/;
 const clientPortRegex = /^--riotclient-app-port=([0-9]+)$/;
 
 /**
- * Rotinas que são chamadas periodicamente. 
- * 
+ * Rotinas chamadas periodicamente.
+ *
  * @constant
  * @default
-*/
+ */
 export const routines = [];
 
 /**
  * Fase em que o jogo está, por exemplo: ChampionSelect
- * 
+ *
  * @var
  * @default
  * @see {@link linkEndpoint} (/lol-gameflow/v1/gameflow-phase)
@@ -29,12 +29,12 @@ export let gamePhase = null;
 
 /**
  * Credenciais do client que são atualizadas posteriormente.
- * 
+ *
  * @constant
  * @default
  * @see {@link fetchClientCredentials} a função que atualiza essas credenciais.
  */
-export const credentials = { auth: null, port: null };
+export const credentials = {auth: null, port: null};
 
 async function fetchClientCredentials() {
     const response = await fetch("/riotclient/command-line-args");
@@ -64,8 +64,8 @@ async function watchRoutines() {
 }
 
 /**
-* Possibilita requisições a loja do usuário autenticado.
-*/
+ * Possibilita requisições a loja do usuário autenticado.
+ */
 export class StoreBase {
     constructor() {
         this.url = null;
@@ -99,7 +99,7 @@ export class StoreBase {
 
     /**
      * Autentica a classe, definindo os atributos da instância.
-     * 
+     *
      * @async
      * @function
      * @summary Essa função deve ser chamada antes de utilizar a classe.
@@ -129,7 +129,7 @@ export class StoreBase {
 
 /**
  * Faz o código dormir por um tempo específico.
- * 
+ *
  * @async
  * @function
  * @param {Number} ms - Milissegundos que a função vai dormir.
@@ -139,16 +139,16 @@ export const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 /**
  * Adiciona funções que vão ser chamadas periodicamente.
- * 
+ *
  * @async
  * @function
  * @param {CallableFunction[]} callbacks - Funções que vão ser adicionadas.
  */
-export function addRoutines(...callbacks) { routines.push(...callbacks) };
+export function addRoutines(...callbacks) { routines.push(...callbacks); }
 
 /**
  * Linka um endpoint a uma função.
- * 
+ *
  * @async
  * @function
  * @summary Quando o endpoint for atualizado, {@link callback} vai ser chamado recebendo seus dados.
@@ -167,14 +167,14 @@ export function linkEndpoint(rawEndpoint, callback) {
 
     webSocket.onmessage = (messageEvent) => {
         const parsedMessageEvent = JSON.parse(messageEvent.data);
-        callback({ data: parsedMessageEvent[2], rawEvent: parsedMessageEvent });
+        callback({data: parsedMessageEvent[2], rawEvent: parsedMessageEvent});
     };
 }
 
 function init() {
     fetchClientCredentials();
     watchRoutines();
-    linkEndpoint("/lol-gameflow/v1/gameflow-phase", (messageEvent) => { gamePhase = messageEvent.data.data });
+    linkEndpoint("/lol-gameflow/v1/gameflow-phase", (messageEvent) => gamePhase = messageEvent.data.data);
 }
 
 window.addEventListener("load", init);
