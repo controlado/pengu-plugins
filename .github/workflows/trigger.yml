@@ -1,0 +1,33 @@
+name: Trigger dependent repositories
+
+on:
+  - push
+
+jobs:
+  triggerWorkflows:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        repos:
+          - auto-champion-select
+          - buy-champions
+          - profile-utils
+          - refund-last-purchase
+
+    steps:
+      - name: Check changes
+        uses: tj-actions/verify-changed-files@v16
+        id: check-changes
+        with:
+          files: controladoUtils.js
+
+      - name: Trigger repositories
+        if: steps.check-changes.outputs.files_changed == "true"
+        run: |
+          for repo in "${{ matrix.repos }}"; do
+            curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                 -H "Accept: application/vnd.github.everest-preview+json" \
+                 "https://api.github.com/repos/controlado/${repo}/dispatches" \
+                 --data '{"event_type": "utils-updated"}'
+          done
