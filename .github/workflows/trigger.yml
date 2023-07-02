@@ -14,24 +14,19 @@ jobs:
           - buy-champions
           - profile-utils
           - refund-last-purchase
-  
-    steps:    
-      - name: Checkout do repositório
+
+    steps:
+      - name: Repository checkout
         uses: actions/checkout@v2
 
       - name: Check changes
-        id: check_changes
-        run: |
-          git fetch
-          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
-          if echo "$CHANGED_FILES" | grep -q "controladoUtils.js"; then
-          echo "::set-output name=modified::true"
-          else
-          echo "::set-output name=modified::false"
-          fi
+        uses: tj-actions/verify-changed-files@v16
+        id: check-changes
+        with:
+          files: controladoUtils.js
 
       - name: Trigger repositories
-        if: steps.check_changes.outputs.modified == 'true'
+        if: steps.check-changes.outputs.files_changed == 'true'
         run: |
           for repo in "${{ matrix.repos }}"; do
             curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
