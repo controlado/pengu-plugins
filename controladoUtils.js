@@ -21,7 +21,7 @@ export const routines = [];
 /**
  * Fase em que o jogo está, por exemplo: ChampionSelect
  * 
- * @constant
+ * @var
  * @default
  * @see {@link linkEndpoint} (/lol-gameflow/v1/gameflow-phase)
  */
