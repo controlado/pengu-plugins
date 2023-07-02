@@ -19,15 +19,6 @@ const clientPortRegex = /^--riotclient-app-port=([0-9]+)$/;
 export const routines = [];
 
 /**
- * Fase em que o jogo está, por exemplo: ChampionSelect
- *
- * @var
- * @default
- * @see {@link linkEndpoint} (/lol-gameflow/v1/gameflow-phase)
- */
-export let gamePhase = null;
-
-/**
  * Credenciais do client que são atualizadas posteriormente.
  *
  * @constant
@@ -35,6 +26,15 @@ export let gamePhase = null;
  * @see {@link fetchClientCredentials} a função que atualiza essas credenciais.
  */
 export const credentials = {auth: null, port: null};
+
+/**
+ * Fase em que o jogo está, por exemplo: ChampionSelect
+ *
+ * @var
+ * @default
+ * @see {@link linkEndpoint} (/lol-gameflow/v1/gameflow-phase)
+ */
+export let gamePhase = null;
 
 async function fetchClientCredentials() {
     const response = await fetch("/riotclient/command-line-args");
