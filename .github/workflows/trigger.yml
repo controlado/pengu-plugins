@@ -14,8 +14,11 @@ jobs:
           - buy-champions
           - profile-utils
           - refund-last-purchase
+  
+    steps:    
+      - name: Checkout do repositório
+        uses: actions/checkout@v2
 
-    steps:
       - name: Check changes
         id: check_changes
         run: |
