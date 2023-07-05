@@ -46,6 +46,20 @@ export let gamePhase = "None";
 export let debug = false;
 
 /**
+ * Uma classe usada para identificar um campeão.
+ */
+export class Champion {
+  /**
+   * @param {number} id
+   * @param {number} ipCost
+   */
+  constructor(id, ipCost) {
+    this.id = id;
+    this.ipCost = ipCost;
+  }
+}
+
+/**
  * Possibilita requisições a loja do usuário autenticado.
  */
 export class StoreBase {
@@ -55,6 +69,27 @@ export class StoreBase {
     this.summoner = null;
     this.session = axios.create();
     this.auth();
+  }
+
+  /**
+   * Compra os campeões requisitados.
+   *
+   * @param {...Champion} champions - Campeões que vão ser comprados.
+   * @return {Promise<Response>} Resposta da requisição.
+   */
+  async buyChampions(...champions) {
+    const items = champions.map(
+        champion => (
+            {
+              inventoryType: "CHAMPION",
+              itemId: champion.id,
+              ipCost: champion.ipCost,
+              quantity: 1,
+            }
+        ),
+    );
+    const body = { accountId: this.summoner.accountId, items: items };
+    return await this.request("POST", "/storefront/v3/purchase", body);
   }
 
   /**
