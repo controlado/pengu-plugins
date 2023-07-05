@@ -117,7 +117,7 @@ export class StoreBase {
  *
  * @async
  * @function
- * @param {"GET" | "POST" | "PUT" | "DELETE" | "HEAD"} method - Método HTTP da requisição.
+ * @param {"GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "HEAD"} method - Método HTTP da requisição.
  * @param {string} endpoint - Endpoint da requisição para a API.
  * @param {Object} [options] - As opções da requisição.
  * @param {Object} [options.headers] - Os cabeçalhos da requisição.
