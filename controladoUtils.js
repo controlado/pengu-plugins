@@ -65,7 +65,7 @@ export class StoreBase {
    * @summary Deve ser chamada após a conclusão do {@link auth}.
    * @param {"GET" | "POST" | "PUT" | "DELETE"} method - Método HTTP da requisição.
    * @param {string} endpoint - Endpoint da requisição para a loja.
-   * @param {JSON} [requestBody] - Parâmetro opcional, corpo da requisição.
+   * @param {Object} [requestBody] - Parâmetro opcional, corpo da requisição.
    * @return {Promise<Response>} Resposta da requisição.
    */
   async request(method, endpoint, requestBody = undefined) {
@@ -110,6 +110,35 @@ export class StoreBase {
     const response = await fetch("/lol-summoner/v1/current-summoner");
     return await response.json();
   }
+}
+
+/**
+ * Função que realiza uma requisição utilizando a função fetch.
+ *
+ * @async
+ * @function
+ * @param {"GET" | "POST" | "PUT" | "DELETE" | "HEAD"} method - Método HTTP da requisição.
+ * @param {string} endpoint - Endpoint da requisição para a API.
+ * @param {Object} [options] - As opções da requisição.
+ * @param {Object} [options.headers] - Os cabeçalhos da requisição.
+ * @param {Object} [options.body] - O corpo da requisição.
+ * @returns {Promise<Response>} Resposta da requisição.
+ */
+export async function request(method, endpoint, { headers, body } = {}) {
+  const requestOptions = {
+    method: method,
+    headers: {
+      ...headers,
+      "accept": "application/json",
+      "content-type": "application/json",
+    },
+  };
+
+  if (method !== "GET" && method !== "HEAD") {
+    requestOptions.body = JSON.stringify(body);
+  }
+
+  return await fetch(endpoint, requestOptions);
 }
 
 /**
