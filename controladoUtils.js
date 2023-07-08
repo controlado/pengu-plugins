@@ -79,14 +79,14 @@ export class StoreBase {
    */
   async buyChampions(...champions) {
     const items = champions.map(
-        champion => (
-            {
-              inventoryType: "CHAMPION",
-              itemId: champion.id,
-              ipCost: champion.ipCost,
-              quantity: 1,
-            }
-        ),
+      champion => (
+        {
+          inventoryType: "CHAMPION",
+          itemId: champion.id,
+          ipCost: champion.ipCost,
+          quantity: 1,
+        }
+      ),
     );
     const body = { accountId: this.summoner.accountId, items: items };
     return await this.request("POST", "/storefront/v3/purchase", body);
