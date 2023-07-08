@@ -236,6 +236,17 @@ export function linkEndpoint(rawEndpoint, callback) {
   webSocket.onmessage = messageEvent => callback(JSON.parse(messageEvent.data)[2], messageEvent);
 }
 
+/**
+ * Retorna o elemento HTML que corresponde ao XPath especificado.
+ *
+ * @param {string} path - XPath do elemento.
+ * @return {HTMLElement} Elemento HTML que corresponde ao XPath especificado.
+ */
+export function getElementByXpath(path) {
+  const result = document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+  return result.singleNodeValue;
+}
+
 async function fetchClientCredentials() {
   const response = await fetch("/riotclient/command-line-args");
   const responseData = await response.json();
