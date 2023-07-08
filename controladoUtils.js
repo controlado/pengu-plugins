@@ -157,9 +157,10 @@ export class StoreBase {
  * @param {Object} [options] - As opções da requisição.
  * @param {Object} [options.headers] - Os cabeçalhos da requisição.
  * @param {Object} [options.body] - O corpo da requisição.
+ * @param {Object} [options.params] - Parâmetros da requisição.
  * @returns {Promise<Response>} Resposta da requisição.
  */
-export async function request(method, endpoint, { headers, body } = {}) {
+export async function request(method, endpoint, { headers, body, params } = {}) {
   const requestOptions = {
     method: method,
     headers: {
@@ -168,6 +169,10 @@ export async function request(method, endpoint, { headers, body } = {}) {
       "content-type": "application/json",
     },
   };
+
+  if (params !== undefined) {
+    endpoint += "?" + new URLSearchParams(params).toString();
+  }
 
   if (method !== "GET" && method !== "HEAD") {
     requestOptions.body = JSON.stringify(body);
