@@ -29,13 +29,14 @@ export const routines = [];
 export const credentials = { auth: null, port: null };
 
 /**
- * Fase em que o jogo está, por exemplo: ChampionSelect
+ * Fase em que o jogo se encontra.
+ *
  *
  * @var
- * @type {string}
- * @see {@link linkEndpoint} - /lol-gameflow/v1/gameflow-phase
+ * @type {"None" | "Lobby" | "Matchmaking" | "ReadyCheck" | "ChampSelect" | "InProgress" | "GameStart"}
+ * @see {@link linkEndpoint} - retorna essa informação usando "/lol-gameflow/v1/gameflow-phase".
  */
-export let gamePhase = "None";
+export let gamePhase;
 
 /**
  * Modo de testes do módulo.
@@ -79,14 +80,14 @@ export class StoreBase {
    */
   async buyChampions(...champions) {
     const items = champions.map(
-      champion => (
-        {
-          inventoryType: "CHAMPION",
-          itemId: champion.id,
-          ipCost: champion.ipCost,
-          quantity: 1,
-        }
-      ),
+        champion => (
+            {
+              inventoryType: "CHAMPION",
+              itemId: champion.id,
+              ipCost: champion.ipCost,
+              quantity: 1,
+            }
+        ),
     );
     const body = { accountId: this.summoner.accountId, items: items };
     return await this.request("POST", "/storefront/v3/purchase", body);
@@ -275,14 +276,37 @@ async function watchRoutines() {
   setTimeout(watchRoutines, 1000);
 }
 
+/**
+ * Inicializa a variável global {@link gamePhase} com o valor atual da fase do jogo.
+ *
+ * @async
+ * @function
+ * @summary Útil para casos onde o script é carregado após o jogo já ter iniciado.
+ */
+async function setGamePhase() {
+  while (gamePhase === undefined) {
+    await sleep(500);
+
+    const response = await request("GET", "/lol-gameflow/v1/gameflow-phase");
+    gamePhase = await response.json(); // pode ser: None, Lobby, Matchmaking, ReadyCheck, ChampSelect...
+
+    if (debug) {
+      console.log(gamePhase);
+    }
+  }
+}
+
 function init() {
-  fetchClientCredentials();
-  watchRoutines();
+  linkEndpoint("", parsedEvent => { if (debug) console.log(parsedEvent.uri, parsedEvent.data); });
   linkEndpoint("/lol-gameflow/v1/gameflow-phase", parsedEvent => gamePhase = parsedEvent.data);
 
-  if (debug) {
-    linkEndpoint("", parsedEvent => console.log(parsedEvent.uri, parsedEvent.data));
-  }
+  window.getGamePhase = () => gamePhase;
+  window.LCURequest = request;
+  window.LCUSleep = sleep;
+
+  fetchClientCredentials();
+  watchRoutines();
+  setGamePhase();
 }
 
 window.addEventListener("load", init);
