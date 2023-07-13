@@ -1,7 +1,9 @@
 name: Trigger dependent repositories
 
 on:
-  - push
+  push:
+    paths:
+      - "controladoUtils.js"
 
 jobs:
   triggerWorkflows:
