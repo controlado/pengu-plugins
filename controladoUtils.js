@@ -321,11 +321,13 @@ function init() {
   setLayerManager();
   fetchClientCredentials();
   linkEndpoint("/lol-gameflow/v1/gameflow-phase", parsedEvent => gamePhase = parsedEvent.data);
-  if (debug) { linkEndpoint("", parsedEvent => console.log(parsedEvent.uri, parsedEvent.data)); }
 
-  window.getGamePhase = () => gamePhase;
-  window.LCURequest = request;
-  window.LCUSleep = sleep;
+  if (debug) {
+    linkEndpoint("", parsedEvent => console.log(parsedEvent.uri, parsedEvent.data));
+    window.getGamePhase = () => gamePhase;
+    window.LCURequest = request;
+    window.LCUSleep = sleep;
+  }
 
   watchRoutines();
 }
