@@ -12,6 +12,7 @@ jobs:
     strategy:
       matrix:
         repos:
+          - random-champion
           - auto-champion-select
           - buy-champions
           - profile-utils
