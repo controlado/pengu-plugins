@@ -39,6 +39,15 @@ export const credentials = { auth: null, port: null };
 export let gamePhase;
 
 /**
+ * Elemento que contém alguns elementos da interface do usuário.
+ * 
+ * @var
+ * @type {HTMLElement}
+ * @see {@link setLayerManager} - define esse elemento.
+ */
+export let layerManager;
+
+/**
  * Modo de testes do módulo.
  *
  * @var
@@ -80,14 +89,14 @@ export class StoreBase {
    */
   async buyChampions(...champions) {
     const items = champions.map(
-        champion => (
-            {
-              inventoryType: "CHAMPION",
-              itemId: champion.id,
-              ipCost: champion.ipCost,
-              quantity: 1,
-            }
-        ),
+      champion => (
+        {
+          inventoryType: "CHAMPION",
+          itemId: champion.id,
+          ipCost: champion.ipCost,
+          quantity: 1,
+        }
+      ),
     );
     const body = { accountId: this.summoner.accountId, items: items };
     return await this.request("POST", "/storefront/v3/purchase", body);
@@ -234,7 +243,7 @@ export function linkEndpoint(rawEndpoint, callback) {
   const endpoint = rawEndpoint.replaceAll("/", "_");
 
   webSocket.onopen = () => webSocket.send(JSON.stringify([5, "OnJsonApiEvent" + endpoint]));
-  webSocket.onmessage = messageEvent => callback(JSON.parse(messageEvent.data)[2], messageEvent);
+  webSocket.onmessage = async messageEvent => callback(JSON.parse(messageEvent.data)[2], messageEvent);
 }
 
 /**
@@ -296,17 +305,29 @@ async function setGamePhase() {
   }
 }
 
+async function setLayerManager() {
+  while (!layerManager) {
+    layerManager = document.querySelector("#lol-uikit-layer-manager-wrapper");
+    await sleep(500);
+
+    if (debug) {
+      console.log(layerManager);
+    }
+  }
+}
+
 function init() {
-  linkEndpoint("", parsedEvent => { if (debug) console.log(parsedEvent.uri, parsedEvent.data); });
+  setGamePhase();
+  setLayerManager();
+  fetchClientCredentials();
   linkEndpoint("/lol-gameflow/v1/gameflow-phase", parsedEvent => gamePhase = parsedEvent.data);
+  if (debug) { linkEndpoint("", parsedEvent => console.log(parsedEvent.uri, parsedEvent.data)); }
 
   window.getGamePhase = () => gamePhase;
   window.LCURequest = request;
   window.LCUSleep = sleep;
 
-  fetchClientCredentials();
   watchRoutines();
-  setGamePhase();
 }
 
 window.addEventListener("load", init);
