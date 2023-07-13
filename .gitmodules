@@ -10,3 +10,6 @@
 [submodule "profile-utils"]
 	path = profile-utils
 	url = https://github.com/controlado/profile-utils
+[submodule "random-champion"]
+	path = random-champion
+	url = https://github.com/controlado/random-champion.git
