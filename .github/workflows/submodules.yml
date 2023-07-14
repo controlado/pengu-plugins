@@ -1,9 +1,10 @@
 name: "Update submodules"
 
 on:
-  push:
   workflow_dispatch:
   repository_dispatch:
+  schedule:
+    - cron: "0 0 */2 * *"
 
 jobs:
   build:
