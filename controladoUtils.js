@@ -192,6 +192,36 @@ export async function request(method, endpoint, { headers, body, params } = {}) 
 }
 
 /**
+ * Envia uma notificação no chat da seleção de campeões.
+ *
+ * @async
+ * @function
+ * @param {string} notification - Notificação que vai ser enviada.
+ * @return {Promise<Object>} Resposta da requisição.
+ */
+export async function sendChatNotification(notification) {
+  const { participants } = await getChampionSelectParticipants();
+  const { cid } = participants[0];
+
+  const body = { body: notification, type: "celebration" };
+  const endpoint = `/lol-chat/v1/conversations/${cid}/messages`;
+  const response = await request("POST", endpoint, { body });
+  return await response.json();
+}
+
+/**
+ * Retorna os dados dos participantes da seleção de campeões.
+ * 
+ * @async
+ * @function
+ * @returns {Promise<Object>} Dados dos participantes da seleção de campeões.
+ */
+export async function getChampionSelectParticipants() {
+  const response = await request("GET", "//riotclient/chat/v5/participants/champ-select");
+  return await response.json();
+}
+
+/**
  * Faz o código dormir por um tempo específico.
  *
  * @async
