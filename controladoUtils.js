@@ -273,7 +273,7 @@ export function linkEndpoint(rawEndpoint, callback) {
   const endpoint = rawEndpoint.replaceAll("/", "_");
 
   webSocket.onopen = () => webSocket.send(JSON.stringify([5, "OnJsonApiEvent" + endpoint]));
-  webSocket.onmessage = async messageEvent => callback(JSON.parse(messageEvent.data)[2], messageEvent);
+  webSocket.onmessage = messageEvent => callback(JSON.parse(messageEvent.data)[2], messageEvent);
 }
 
 /**
