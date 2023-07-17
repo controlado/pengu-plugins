@@ -13,6 +13,7 @@ Be sure to read their documentation
 
 ## Releases
 
+[shop-champion-select](https://github.com/controlado/shop-champion-select) (buy champions inside champion select) <br>
 [auto-champion-select](https://github.com/controlado/auto-champion-select) (pick or ban automatically) <br>
 [random-champion](https://github.com/controlado/random-champion) (pick and ban a random champion) <br>
 [buy-champions](https://github.com/controlado/buy-champions) (buy champions automatically) <br>
