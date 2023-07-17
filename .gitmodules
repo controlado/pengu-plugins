@@ -13,3 +13,6 @@
 [submodule "random-champion"]
 	path = random-champion
 	url = https://github.com/controlado/random-champion.git
+[submodule "shop-champion-select"]
+	path = shop-champion-select
+	url = https://github.com/controlado/shop-champion-select.git
