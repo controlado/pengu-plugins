@@ -76,6 +76,7 @@ export class StoreBase {
   constructor() {
     this.url = null;
     this.token = null;
+    this.expiry = null;
     this.summoner = null;
     this.session = axios.create();
     this.auth();
@@ -154,8 +155,14 @@ export class StoreBase {
     const promises = [this.getStoreUrl(), this.getSummonerToken(), this.getSummonerData()];
     [this.url, this.token, this.summoner] = await Promise.all(promises);
 
+    if (this.expiry) {
+      const now = new Date();
+      const diff = this.expiry - now;
+      setTimeout(this.auth.bind(this), diff);
+    }
+
     if (debug) {
-      console.log(this.url, this.token, this.summoner);
+      console.log(this.url, this.token, this.summoner, this.expiry);
     }
   }
 
@@ -167,6 +174,7 @@ export class StoreBase {
   async getSummonerToken() {
     const response = await fetch("/lol-rso-auth/v1/authorization/access-token");
     const responseData = await response.json();
+    this.expiry = new Date(responseData.expiry * 1000);
     return responseData.token;
   }
 
