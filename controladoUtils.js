@@ -87,7 +87,7 @@ export class StoreBase {
    * @param {...Champion} champions - Campeões que vão ser comprados.
    * @return {Promise<Response>} Resposta da requisição.
    */
-  async buyChampions(...champions) {
+  buyChampions(...champions) {
     const items = champions.map(
       champion => (
         {
@@ -99,7 +99,7 @@ export class StoreBase {
       ),
     );
     const body = { accountId: this.summoner.accountId, items: items };
-    return await this.request("POST", "/storefront/v3/purchase", body);
+    return this.request("POST", "/storefront/v3/purchase", body);
   }
 
   /**
@@ -110,18 +110,18 @@ export class StoreBase {
    * @summary Deve ser chamada após a conclusão do {@link auth}.
    * @param {"GET" | "POST" | "PUT" | "DELETE"} method - Método HTTP da requisição.
    * @param {string} endpoint - Endpoint da requisição para a loja.
-   * @param {Object} [requestBody] - Parâmetro opcional, corpo da requisição.
+   * @param {Object} [body] - Parâmetro opcional, corpo da requisição.
    * @return {Promise<Response>} Resposta da requisição.
    */
-  async request(method, endpoint, requestBody = undefined) {
+  request(method, endpoint, body = undefined) {
     const requestParams = {
-      method: method,
+      method,
       headers: {
         Authorization: `Bearer ${this.token}`,
       },
+      ...body && { data: body },
     };
-    if (requestBody) requestParams.data = requestBody;
-    return await this.session.request(this.url + endpoint, requestParams);
+    return this.session.request(this.url + endpoint, requestParams);
   }
 
   /**
@@ -170,25 +170,22 @@ export class StoreBase {
  * @param {Object} [options.params] - Parâmetros da requisição.
  * @returns {Promise<Response>} Resposta da requisição.
  */
-export async function request(method, endpoint, { headers, body, params } = {}) {
+export function request(method, endpoint, { headers, body, params } = {}) {
   const requestOptions = {
-    method: method,
+    method,
     headers: {
       ...headers,
       "accept": "application/json",
       "content-type": "application/json",
     },
+    ...body && { body: JSON.stringify(body) },
   };
 
-  if (params !== undefined) {
+  if (params) {  // query parameters
     endpoint += "?" + new URLSearchParams(params).toString();
   }
 
-  if (method !== "GET" && method !== "HEAD") {
-    requestOptions.body = JSON.stringify(body);
-  }
-
-  return await fetch(endpoint, requestOptions);
+  return fetch(endpoint, requestOptions);
 }
 
 /**
@@ -197,7 +194,7 @@ export async function request(method, endpoint, { headers, body, params } = {}) 
  * @async
  * @function
  * @param {string} notification - Notificação que vai ser enviada.
- * @return {Promise<Object>} Resposta da requisição.
+ * @return {Promise<Response>} Resposta da requisição.
  */
 export async function sendChatNotification(notification) {
   const { participants } = await getChampionSelectParticipants();
@@ -205,8 +202,7 @@ export async function sendChatNotification(notification) {
 
   const body = { body: notification, type: "celebration" };
   const endpoint = `/lol-chat/v1/conversations/${cid}/messages`;
-  const response = await request("POST", endpoint, { body });
-  return await response.json();
+  return request("POST", endpoint, { body });
 }
 
 /**
