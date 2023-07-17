@@ -12,11 +12,12 @@ jobs:
     strategy:
       matrix:
         repos:
-          - random-champion
-          - auto-champion-select
-          - buy-champions
           - profile-utils
           - refund-last-purchase
+          - auto-champion-select
+          - random-champion
+          - buy-champions
+          - shop-champion-select
 
     steps:
       - name: Repository checkout
