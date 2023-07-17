@@ -114,7 +114,7 @@ export class StoreBase {
    * @param {Object} [body] - Parâmetro opcional, corpo da requisição.
    * @return {Promise<Response>} Resposta da requisição.
    */
-  request(method, endpoint, body = undefined) {
+  async request(method, endpoint, body = undefined) {
     const requestParams = {
       method,
       headers: {
@@ -122,6 +122,11 @@ export class StoreBase {
       },
       ...body && { data: body },
     };
+
+    if (new Date() > this.expiry) {
+      await this.refresh();
+    }
+
     return this.session.request(this.url + endpoint, requestParams);
   }
 
@@ -155,14 +160,16 @@ export class StoreBase {
     const promises = [this.getStoreUrl(), this.getSummonerToken(), this.getSummonerData()];
     [this.url, this.token, this.summoner] = await Promise.all(promises);
 
-    if (this.expiry) {
-      const now = new Date();
-      const diff = this.expiry - now;
-      setTimeout(this.auth.bind(this), diff);
-    }
-
     if (debug) {
       console.log(this.url, this.token, this.summoner, this.expiry);
+    }
+  }
+
+  async refresh() {
+    this.token = await this.getSummonerToken();
+
+    if (debug) {
+      console.log("store: token expired", this.token, this.expiry);
     }
   }
 
