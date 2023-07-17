@@ -125,6 +125,25 @@ export class StoreBase {
   }
 
   /**
+   * Espera até que a autenticação seja concluída.
+   * 
+   * @async
+   * @function
+   * @summary Útil para casos onde a instância da loja pode ser usada muito cedo.
+   * @param {number} [delay=500] - Milissegundos que a função vai dormir entre as verificações.
+   * @see {@link auth} - função responsável pela autenticação.
+   */
+  async wait(delay = 500) {
+    while (!this.url || !this.token || !this.summoner) {
+      await sleep(delay);
+
+      if (debug) {
+        console.log(this.url, this.token, this.summoner);
+      }
+    }
+  }
+
+  /**
    * Autentica a classe, definindo os atributos da instância.
    *
    * @async
