@@ -17,7 +17,7 @@ Be sure to read their documentation
 [buy-champions](https://github.com/controlado/buy-champions) (buy champions automatically) <br>
 [random-champion](https://github.com/controlado/random-champion) (pick and ban a random champion) <br>
 [auto-champion-select](https://github.com/controlado/auto-champion-select) (pick or ban automatically) <br>
-[refund-last-purchase](https://github.com/controlado/refund-last-purchase) (play with a champion for free) <br>
+[refund-purchases](https://github.com/controlado/refund-last-purchase) (play with a champion or skin for free) <br>
 [profile-utils](https://github.com/controlado/profile-utils) (utilities for your profile)
 
 ## Installation
