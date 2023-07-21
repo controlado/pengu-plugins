@@ -144,7 +144,7 @@ export class StoreBase {
       await sleep(delay);
 
       if (debug) {
-        console.log(this.url, this.token, this.summoner);
+        console.log("store: waiting");
       }
     }
   }
@@ -161,7 +161,7 @@ export class StoreBase {
     [this.url, this.token, this.summoner] = await Promise.all(promises);
 
     if (debug) {
-      console.log(this.url, this.token, this.summoner, this.expiry);
+      console.log("store: authenticated", this.url, this.token, this.summoner, this.expiry);
     }
   }
 
@@ -334,7 +334,7 @@ async function fetchClientCredentials() {
   }
 
   if (debug) {
-    console.log(credentials);
+    console.log("credentials:", credentials);
   }
 }
 
@@ -360,7 +360,7 @@ async function setGamePhase() {
     gamePhase = await response.json(); // pode ser: None, Lobby, Matchmaking, ReadyCheck, ChampSelect...
 
     if (debug) {
-      console.log(gamePhase);
+      console.log("setGamePhase:", gamePhase);
     }
   }
 }
@@ -371,7 +371,7 @@ async function setLayerManager() {
     await sleep(500);
 
     if (debug) {
-      console.log(layerManager);
+      console.log("setLayerManager:", layerManager);
     }
   }
 }
