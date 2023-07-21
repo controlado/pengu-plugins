@@ -3,7 +3,7 @@ name: Trigger dependent repositories
 on:
   push:
     paths:
-      - "controladoUtils.js"
+      - "_controladoUtils.js"
 
 jobs:
   triggerWorkflows:
@@ -29,7 +29,7 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v37
         with:
-          files: controladoUtils.js
+          files: _controladoUtils.js
 
       - name: Trigger repositories
         if: steps.changed-files.outputs.any_changed == 'true'
