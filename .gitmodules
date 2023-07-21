@@ -4,9 +4,6 @@
 [submodule "buy-champions"]
 	path = buy-champions
 	url = https://github.com/controlado/buy-champions
-[submodule "refund-last-purchase"]
-	path = refund-last-purchase
-	url = https://github.com/controlado/refund-last-purchase
 [submodule "profile-utils"]
 	path = profile-utils
 	url = https://github.com/controlado/profile-utils
@@ -16,3 +13,6 @@
 [submodule "shop-champion-select"]
 	path = shop-champion-select
 	url = https://github.com/controlado/shop-champion-select.git
+[submodule "refund-purchases"]
+	path = refund-purchases
+	url = https://github.com/controlado/refund-purchases
