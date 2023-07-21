@@ -13,7 +13,7 @@ jobs:
       matrix:
         repos:
           - profile-utils
-          - refund-last-purchase
+          - refund-purchases
           - auto-champion-select
           - random-champion
           - buy-champions
