@@ -1,14 +1,13 @@
-name: Trigger dependent repositories
+name: Avisar repositórios dependentes
 
 on:
   push:
     paths:
-      - "_controladoUtils.js"
+      - src/**
 
 jobs:
-  triggerWorkflows:
+  trigger-repositories:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         repos:
@@ -20,19 +19,10 @@ jobs:
           - shop-champion-select
 
     steps:
-      - name: Repository checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v37
-        with:
-          files: _controladoUtils.js
-
-      - name: Trigger repositories
-        if: steps.changed-files.outputs.any_changed == 'true'
+      - name: Avisando repositórios
         run: |
           for repo in "${{ matrix.repos }}"; do
             curl -X POST -H "Authorization: token ${{ secrets.DISPATCH_TOKEN }}" \

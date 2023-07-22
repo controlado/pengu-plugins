@@ -1,4 +1,4 @@
-import axios from "https://cdn.skypack.dev/axios";
+import axios from "axios";
 
 /**
  * @author balaclava
@@ -401,6 +401,8 @@ async function setLayerManager() {
 }
 
 function init() {
+  console.debug("controlado-utils: init");
+
   setGamePhase();
   setLayerManager();
   fetchClientCredentials();

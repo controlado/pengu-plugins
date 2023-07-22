@@ -1,13 +1,13 @@
-name: "Update submodules"
+name: Atualizar submodulos
 
 on:
   workflow_dispatch:
   repository_dispatch:
   schedule:
-    - cron: "0 0 */2 * *"
+    - cron: 0 0 */2 * *
 
 jobs:
-  build:
+  update-submodules:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -15,16 +15,15 @@ jobs:
         with:
           submodules: true
 
-      - name: Update submodules
+      - name: Atualizando submodulos
         run: |
           git pull --recurse-submodules
           git submodule update --remote --recursive
 
-      - name: Commit and push changes
+      - name: Subindo mudanças ao repositório
         uses: EndBug/add-and-commit@v9
         with:
-          author_name: "GitHub Actions"
-          author_email: "action@github.com"
+          author_name: GitHub Actions
           message: "update: plugins"
           push: true
 

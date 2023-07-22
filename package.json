@@ -1,0 +1,32 @@
+{
+  "name": "balaclava-utils",
+  "version": "1.0.0",
+  "description": "Functions and dependencies of the @controlado plugins.",
+  "author": "balaclava <yangabrielogy@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/controlado/pengu-plugins.git"
+  },
+  "license": "GPL-3.0-or-later",
+  "main": "./src/controladoUtils.js",
+  "files": [
+    "./src/**/*",
+    "./package.json",
+    "./README.md"
+  ],
+  "keywords": [
+    "pengu-loader",
+    "league-client",
+    "league-of-legends",
+    "plugins",
+    "balaclava",
+    "controlado"
+  ],
+  "bugs": {
+    "url": "https://github.com/controlado/pengu-plugins/issues"
+  },
+  "homepage": "https://github.com/controlado/pengu-plugins#readme",
+  "dependencies": {
+    "axios": "^1.4.0"
+  }
+}
