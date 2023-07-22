@@ -157,6 +157,10 @@ export class StoreBase {
    * @summary Essa função deve ser chamada antes de utilizar a classe.
    */
   async auth() {
+    while (await this.isReady() === false) {
+      await sleep(500);
+    }
+
     const promises = [this.getStoreUrl(), this.getSummonerToken(), this.getSummonerData()];
     [this.url, this.token, this.summoner] = await Promise.all(promises);
 
@@ -174,19 +178,24 @@ export class StoreBase {
   }
 
   async getStoreUrl() {
-    const response = await fetch("/lol-store/v1/getStoreUrl");
+    const response = await request("GET", "/lol-store/v1/getStoreUrl");
     return await response.json();
   }
 
   async getSummonerToken() {
-    const response = await fetch("/lol-rso-auth/v1/authorization/access-token");
+    const response = await request("GET", "/lol-rso-auth/v1/authorization/access-token");
     const responseData = await response.json();
     this.expiry = new Date(responseData.expiry * 1000);
     return responseData.token;
   }
 
   async getSummonerData() {
-    const response = await fetch("/lol-summoner/v1/current-summoner");
+    const response = await request("GET", "/lol-summoner/v1/current-summoner");
+    return await response.json();
+  }
+
+  async isReady() {
+    const response = await request("GET", "/lol-store/v1/store-ready");
     return await response.json();
   }
 }
@@ -318,7 +327,7 @@ export function getElementByXpath(path) {
 }
 
 async function fetchClientCredentials() {
-  const response = await fetch("/riotclient/command-line-args");
+  const response = await request("GET", "/riotclient/command-line-args");
   const responseData = await response.json();
 
   for (const element of responseData) {
