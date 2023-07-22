@@ -48,6 +48,16 @@ export let gamePhase;
 export let layerManager;
 
 /**
+ * ID da conversa da seleção de campeões.
+ * 
+ * @var
+ * @type {string}
+ * @see {@link getChampionSelectCid} - define esse ID.
+ * @see {@link sendChatNotification} - usa esse ID.
+ */
+export let championSelectCid;
+
+/**
  * Modo de testes do módulo.
  *
  * @var
@@ -240,9 +250,7 @@ export function request(method, endpoint, { headers, body, params } = {}) {
  * @return {Promise<Response>} Resposta da requisição.
  */
 export async function sendChatNotification(notification) {
-  const { participants } = await getChampionSelectParticipants();
-  const { cid } = participants[0];
-
+  const cid = championSelectCid || await getChampionSelectCid();
   const body = { body: notification, type: "celebration" };
   const endpoint = `/lol-chat/v1/conversations/${cid}/messages`;
   return request("POST", endpoint, { body });
@@ -253,11 +261,18 @@ export async function sendChatNotification(notification) {
  * 
  * @async
  * @function
- * @returns {Promise<Object>} Dados dos participantes da seleção de campeões.
+ * @returns {Promise<Object[]>} Dados dos participantes da seleção de campeões.
  */
 export async function getChampionSelectParticipants() {
   const response = await request("GET", "//riotclient/chat/v5/participants/champ-select");
-  return await response.json();
+  const { participants } = await response.json();
+  return participants || [];
+}
+
+async function getChampionSelectCid() {
+  const participants = await getChampionSelectParticipants();
+  championSelectCid = participants[0]?.cid;
+  return championSelectCid;
 }
 
 /**
@@ -390,6 +405,12 @@ function init() {
   setLayerManager();
   fetchClientCredentials();
   linkEndpoint("/lol-gameflow/v1/gameflow-phase", parsedEvent => gamePhase = parsedEvent.data);
+  linkEndpoint("/lol-gameflow/v1/gameflow-phase", async parsedEvent => {
+    if (parsedEvent.data === "ChampSelect") {
+      await sleep(1000);
+      getChampionSelectCid();
+    }
+  });
 
   if (debug) {
     linkEndpoint("", parsedEvent => console.log(parsedEvent.uri, parsedEvent.data));
