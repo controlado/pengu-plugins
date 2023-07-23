@@ -247,7 +247,7 @@ export function request(method, endpoint, { headers, body, params } = {}) {
  * @param {string} url - URL do arquivo CSS.
  * @see {@link https://pengu.lol/guide/css-theme#remote-theme}
  */
-function addCssLink(url) {
+export function addCssLink(url) {
   const link = document.createElement("link");
   link.href = url;
   link.type = "text/css";
