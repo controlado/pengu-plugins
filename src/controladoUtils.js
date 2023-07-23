@@ -242,6 +242,20 @@ export function request(method, endpoint, { headers, body, params } = {}) {
 }
 
 /**
+ * Adiciona um arquivo CSS ao documento.
+ * 
+ * @param {string} url - URL do arquivo CSS.
+ * @see {@link https://pengu.lol/guide/css-theme#remote-theme}
+ */
+function addCssLink(url) {
+  const link = document.createElement("link");
+  link.href = url;
+  link.type = "text/css";
+  link.rel = "stylesheet";
+  document.head.appendChild(link);
+}
+
+/**
  * Envia uma notificação no chat da seleção de campeões.
  *
  * @async
