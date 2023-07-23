@@ -415,7 +415,7 @@ async function setLayerManager() {
 }
 
 function init() {
-  console.debug("controlado-utils: init");
+  console.debug("controlado-utils(init): Report bugs to Balaclava#1912");
 
   setGamePhase();
   setLayerManager();
