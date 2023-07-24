@@ -1,6 +1,6 @@
 {
   "name": "balaclava-utils",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Functions and dependencies of the @controlado plugins.",
   "author": "balaclava <yangabrielogy@gmail.com>",
   "repository": {

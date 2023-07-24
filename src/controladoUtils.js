@@ -264,7 +264,7 @@ export function addCssLink(url) {
  * @param {HTMLElement} element - Elemento que vai ser verificado.
  * @returns {Promise<ShadowRoot>} Shadow root do elemento.
  */
-async function waitShadowRoot(element) {
+export async function waitShadowRoot(element) {
   while (!element.shadowRoot) {
     await sleep(200);
   }
