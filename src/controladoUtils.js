@@ -244,6 +244,7 @@ export function request(method, endpoint, { headers, body, params } = {}) {
 /**
  * Adiciona um arquivo CSS ao documento.
  * 
+ * @function
  * @param {string} url - URL do arquivo CSS.
  * @see {@link https://pengu.lol/guide/css-theme#remote-theme}
  */
@@ -253,6 +254,22 @@ export function addCssLink(url) {
   link.type = "text/css";
   link.rel = "stylesheet";
   document.head.appendChild(link);
+}
+
+/**
+ * Aguarda até que o elemento tenha um shadow root.
+ * 
+ * @async
+ * @function
+ * @param {HTMLElement} element - Elemento que vai ser verificado.
+ * @returns {Promise<ShadowRoot>} Shadow root do elemento.
+ */
+async function waitShadowRoot(element) {
+  while (!element.shadowRoot) {
+    await sleep(200);
+  }
+
+  return element.shadowRoot;
 }
 
 /**
