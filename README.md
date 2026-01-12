@@ -2,8 +2,8 @@
 
 # `🐧` Pengu Plugins <br>
 
-[![discord](https://dcbadge.vercel.app/api/shield/854886148455399436?style=flat)](https://discordapp.com/users/854886148455399436) <br>
-[![pengu](https://dcbadge.vercel.app/api/server/9Ubaf7xCRe?style=flat)](https://discord.gg/9Ubaf7xCRe)
+[![discord](https://dcbadge.limes.pink/api/shield/854886148455399436?style=flat)](https://discordapp.com/users/854886148455399436) <br>
+[![pengu](https://dcbadge.limes.pink/api/server/9Ubaf7xCRe?style=flat)](https://discord.gg/9Ubaf7xCRe)
 
 Here are all my Pengu plugins! :) <br>
 Be sure to read their documentation
