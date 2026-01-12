@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "https://cdn.jsdelivr.net/npm/axios/dist/esm/axios.min.js";
 
 /**
  * @author balaclava
